@@ -8,7 +8,9 @@ namespace Creatidea.Library.Images.Examples
 {
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.IO;
 
+    using Creatidea.Library.Images.Enums;
     using Creatidea.Library.Images.Services;
 
     /// <summary>
@@ -21,6 +23,36 @@ namespace Creatidea.Library.Images.Examples
         /// </summary>
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
+        {
+            ShowTextToImage();
+
+            ShowThumbImage();
+        }
+
+        /// <summary>
+        /// Shows the thumb image.
+        /// </summary>
+        private static void ShowThumbImage()
+        {
+            string appDirectory = Directory.GetCurrentDirectory();
+            string path = Path.Combine(appDirectory, "Images", "Demo.png");
+
+            Size size = new Size(500, 500);
+
+            var img1 = CiImage.ThumbImage(path, size);
+            var link1 = SaveImage(img1, ImageFormat.Jpeg);
+            Console.WriteLine("ShowThumbImage: " + link1);
+
+            Image srcImage = Image.FromFile(path);
+            var img2 = CiImage.ThumbImage(srcImage, size, true, ThumbQuality.Best);
+            var link2 = SaveImage(img2, ImageFormat.Png);
+            Console.WriteLine("ShowThumbImage: " + link2);
+        }
+
+        /// <summary>
+        /// Shows the text to image.
+        /// </summary>
+        private static void ShowTextToImage()
         {
             string txt =
                 @"德那這意時羅不爸音天展慢聲子，常著會業氣歌，告化成出形與果的如一光，活定訴，活氣爸、爭現不國腳！
@@ -39,7 +71,29 @@ namespace Creatidea.Library.Images.Examples
 
             var img = CiImage.TextToImage(txt, font, txtColor, backColor, 500);
 
-            img.Save(string.Format(@"D:\{0}.jpg", DateTime.Now.Ticks), ImageFormat.Jpeg);
+            string link = SaveImage(img, ImageFormat.Gif);
+            Console.WriteLine("ShowTextToImage: " + link);
+        }
+
+        /// <summary>
+        /// Saves the image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <param name="format">The format.</param>
+        /// <returns>System.String.</returns>
+        private static string SaveImage(Image image, ImageFormat format)
+        {
+            string appDirectory = Directory.GetCurrentDirectory();
+            string fileName = DateTime.Now.Ticks + "." + format.ToString().ToLower();
+            if (!Directory.Exists(Path.Combine(appDirectory, "Temps")))
+            {
+                Directory.CreateDirectory(
+                    Path.Combine(appDirectory, "Temps"));
+            }
+
+            image.Save(Path.Combine(appDirectory, "Temps", fileName), format);
+
+            return fileName;
         }
     }
 }
