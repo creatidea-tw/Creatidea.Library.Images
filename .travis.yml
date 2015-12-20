@@ -1,0 +1,4 @@
+language: csharp
+solution: Creatidea.Library.Images.sln
+install:
+- nuget restore Creatidea.Library.Images.sln
