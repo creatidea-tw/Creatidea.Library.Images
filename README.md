@@ -27,4 +27,4 @@ using System.Drawing;
 
 # Method List
  - TextToImage
- - ThumbImage
+ - ThumbImage (overload)

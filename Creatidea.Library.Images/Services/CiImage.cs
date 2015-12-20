@@ -71,10 +71,9 @@
         /// <param name="path">The image path.</param>
         /// <param name="size">The thumb size.</param>
         /// <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
-        /// <param name="format">The format.</param>
         /// <param name="mode">The image quality.</param>
         /// <returns>Image.</returns>
-        public static Image ThumbImage(string path, Size size, bool sameRatio = true, ImageFormat format = null, ThumbQuality mode = ThumbQuality.Normal)
+        public static Image ThumbImage(string path, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
         {
             Image srcImage = Image.FromFile(path);
 
@@ -139,10 +138,9 @@
         /// <param name="srcImage">The source image.</param>
         /// <param name="size">The thumb size.</param>
         /// <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
-        /// <param name="format">The format.</param>
         /// <param name="mode">The image quality.</param>
         /// <returns>Image.</returns>
-        public static Image ThumbImage(Image srcImage, Size size, bool sameRatio = true, ImageFormat format = null, ThumbQuality mode = ThumbQuality.Normal)
+        public static Image ThumbImage(Image srcImage, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
         {
             // check is need to maintain ratio
             if (sameRatio == true)
