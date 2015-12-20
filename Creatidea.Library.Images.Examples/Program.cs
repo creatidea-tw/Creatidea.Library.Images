@@ -39,7 +39,7 @@ namespace Creatidea.Library.Images.Examples
 
             var img = CiImage.TextToImage(txt, font, txtColor, backColor, 500);
 
-            img.Save(@"D:\test.jpg", ImageFormat.Jpeg);
+            img.Save(string.Format(@"D:\{0}.jpg", DateTime.Now.Ticks), ImageFormat.Jpeg);
         }
     }
 }
