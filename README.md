@@ -1,7 +1,7 @@
 # Creatidea.Library.Images
 創鈺共用類別庫系列
 
-[![BuildStatus](https://travis-ci.org/lettucebo/Creatidea.Library.Images.png?branch=matser)](https://travis-ci.org/lettucebo/Creatidea.Library.Images)
+[![BuildStatus](https://travis-ci.org/lettucebo/Creatidea.Library.Images.svg)](https://travis-ci.org/lettucebo/Creatidea.Library.Images)
 
 See the [changelog](https://github.com/lettucebo/Creatidea.Library.Images/blob/matser/CHANGELOG.md) for updates.
 
