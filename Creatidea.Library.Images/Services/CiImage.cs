@@ -14,21 +14,23 @@
         /// <param name="font">文字字型.</param>
         /// <param name="textColor">文字顏色.</param>
         /// <param name="backColor">背景顏色.</param>
-        /// <param name="size">圖片大小.</param>
+        /// <param name="width">The default width.</param>
         /// <returns>System.String.</returns>
-        public static Image TextToImage(string text, Font font, Color textColor, Color backColor, SizeF size = default(SizeF))
+        public static Image TextToImage(string text, Font font, Color textColor, Color backColor, int width = 0)
         {
             // first, create a dummy bitmap just to get a graphics object
             Image img = new Bitmap(1, 1);
             Graphics drawing = Graphics.FromImage(img);
 
             // measure the string to see how big the image needs to be
-            SizeF textSize = drawing.MeasureString(text, font);
-
-            // 判斷欲取得之圖片大小是否符合條件
-            if (size != default(SizeF) && size.Width >= textSize.Width)
+            SizeF textSize = new SizeF();
+            if (width != 0)
             {
-                textSize = size;
+                textSize = drawing.MeasureString(text, font, width);
+            }
+            else
+            {
+                textSize = drawing.MeasureString(text, font);
             }
 
             // free up the dummy image and old graphics object
@@ -46,13 +48,7 @@
             // create a brush for the text
             Brush textBrush = new SolidBrush(textColor);
 
-            /*
-            // 文字對齊方式
-            StringFormat sf = new StringFormat();
-            sf.Alignment = StringAlignment.Near;
-            */
-
-            drawing.DrawString(text, font, textBrush, 0, 0);
+            drawing.DrawString(text, font, textBrush, new RectangleF(5f, 10f, textSize.Width - 5, textSize.Height - 10));
 
             drawing.Save();
 
