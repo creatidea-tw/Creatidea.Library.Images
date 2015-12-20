@@ -38,7 +38,8 @@
             drawing.Dispose();
 
             // create a new image of the right size
-            img = new Bitmap((int)textSize.Width, (int)textSize.Height);
+            // plus 15 prvent bottom text not being cut
+            img = new Bitmap((int)textSize.Width, (int)textSize.Height + 15);
 
             drawing = Graphics.FromImage(img);
 
@@ -48,7 +49,7 @@
             // create a brush for the text
             Brush textBrush = new SolidBrush(textColor);
 
-            drawing.DrawString(text, font, textBrush, new RectangleF(5f, 10f, textSize.Width - 5, textSize.Height - 10));
+            drawing.DrawString(text, font, textBrush, new RectangleF(5f, 10f, textSize.Width, textSize.Height));
 
             drawing.Save();
 
