@@ -29,5 +29,25 @@ using System.Drawing;
 ## How to: Thumb Image
 
 Thumb is common use in most of scenario, here provide a simple way to accomplish this goal.
-
 Combine [CiConfig](https://github.com/lettucebo/Creatidea.Library.Configs) and [CiResult](https://github.com/lettucebo/Creatidea.Library.Results) for better user experience.
+
+CiImage is a static calss, so no need to new an instance, just call it.
+The return type is **CiResult<Image>**, call CiResult<Image>.Data for Image object.
+
+The following example demonstrates how to create an email object and populate it:
+```csharp
+Console.WriteLine("Method1: Read size config from CiImage config file");
+var result1 = CiImage.ThumbImage(path);
+if (!result1.Success)
+{
+  Console.WriteLine("發生錯誤：{0}", result1.Message);
+}
+else
+{
+  var link = SaveImage(result1.Data, ImageFormat.Jpeg);
+  Console.WriteLine("Show result1: {0}", link);
+}
+```
+- This method use CiConfig read size config, first look for "Size", if not exist then find for "FitSize".
+- If Size is found, then it will stop to find FitSize and use Size for size setting.
+- Use Size will maintain image ratio，FitSize will not maintain image ratio.
