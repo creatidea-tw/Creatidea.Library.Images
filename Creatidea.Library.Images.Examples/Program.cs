@@ -24,7 +24,7 @@ namespace Creatidea.Library.Images.Examples
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
         {
-            //ShowTextToImage();
+            ShowTextToImage();
 
             ShowThumbImage();
         }

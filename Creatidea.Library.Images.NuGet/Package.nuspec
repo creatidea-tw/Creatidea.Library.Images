@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Creatidea.Library.Images</id>
+        <version>1.0.1</version>
+        <title>Creatidea.Library.Images</title>
+        <authors>Money</authors>
+        <owners>Money</owners>
+        <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+        <projectUrl>https://github.com/lettucebo/Creatidea.Library.Images</projectUrl>
+        <iconUrl>http://i.imgur.com/2H44Wnd.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>圖片相關輔助方法</description>
+        <summary>創鈺共用類別庫系列</summary>
+        <copyright>Copyright  2016</copyright>
+        <language>zh-TW</language>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Creatidea.Library.Configs" version="1.0.4" />
+                <dependency id="Creatidea.Library.Results" version="1.0.0" />
+            </group>
+        </dependencies>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Drawing" targetFramework=".NETFramework4.5" />
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="content\App_Data\CiConfig\CiImage.json" target="content\App_Data\CiConfig\CiImage.json" />
+        <file src="lib\Creatidea.Library.Images.dll" target="lib\Creatidea.Library.Images.dll" />
+    </files>
+</package>
