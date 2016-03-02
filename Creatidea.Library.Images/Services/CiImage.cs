@@ -4,8 +4,11 @@
     using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.Drawing.Imaging;
+    using System.Linq;
 
+    using Creatidea.Library.Configs;
     using Creatidea.Library.Images.Enums;
+    using Creatidea.Library.Results;
 
     /// <summary>
     /// CiImage 公開類別.
@@ -64,18 +67,85 @@
             return img;
         }
 
-
         /// <summary>
-        /// Thumbs the image.
+        /// 從CiConfig讀取CiImage.Size或CiImage.FitSize設定作為依據並縮圖
         /// </summary>
         /// <param name="path">The image path.</param>
-        /// <param name="size">The thumb size.</param>
-        /// <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
-        /// <param name="mode">The image quality.</param>
+        /// <param name="mode">縮圖品質.</param>
         /// <returns>Image.</returns>
-        public static Image ThumbImage(string path, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
+        public static CiResult<Image> ThumbImage(string path, ThumbQuality mode = ThumbQuality.Normal)
         {
-            Image srcImage = Image.FromFile(path);
+            var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
+
+            if (CiConfig.Global.CiImage.Size != null && CiConfig.Global.CiImage.Size.ToString() != "0")
+            {
+                int size;
+                if (int.TryParse(CiConfig.Global.CiImage.Size.ToString(), out size))
+                {
+                    return ThumbImage(path, size, mode);
+                }
+            }
+
+            if (CiConfig.Global.CiImage.FitSize != null)
+            {
+                string tmpSizeString = CiConfig.Global.CiImage.FitSize.ToString();
+                string[] tmpSizeArray = tmpSizeString.Split(',');
+                if (tmpSizeArray.Count() != 2)
+                {
+                    result.Message += "無法讀取縮圖尺寸設定檔！FitSize格式錯誤！";
+                    return result;
+                }
+
+                int sizeX, sizeY;
+                if (!int.TryParse(tmpSizeArray[0], out sizeX) || !int.TryParse(tmpSizeArray[0], out sizeY))
+                {
+                    result.Message += "無法讀取縮圖尺寸設定檔！FitSize格式錯誤！";
+                    return result;
+                }
+
+                Size fitSize = new Size() { Width = sizeX, Height = sizeY };
+                return ThumbImage(path, fitSize, false, mode);
+            }
+
+            result.Message += "無法讀取縮圖尺寸設定檔！";
+            return result;
+        }
+
+        /// <summary>
+        /// 傳入最大邊長度作為依據並縮圖且一定會維持比例
+        /// </summary>
+        /// <param name="path">The image path.</param>
+        /// <param name="size">最大邊長度.</param>
+        /// <param name="mode">縮圖品質.</param>
+        /// <returns>Image.</returns>
+        public static CiResult<Image> ThumbImage(string path, int size, ThumbQuality mode = ThumbQuality.Normal)
+        {
+            return ThumbImage(path, new Size(size, size), true, mode);
+        }
+
+        /// <summary>
+        /// 傳入指定大小作為依據並縮圖
+        /// </summary>
+        /// <param name="path">完整圖片檔路徑.</param>
+        /// <param name="size">The thumb size.</param>
+        /// <param name="sameRatio">if set to <c>true</c> 維持長寬比.</param>
+        /// <param name="mode">縮圖品質.</param>
+        /// <returns>Image.</returns>
+        public static CiResult<Image> ThumbImage(string path, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
+        {
+            var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
+
+            // 讀取檔案
+            Image srcImage;
+            try
+            {
+                srcImage = Image.FromFile(path);
+            }
+            catch (Exception ex)
+            {
+                result.Message += string.Format("無法讀取圖片檔案！路徑：{0}，錯誤訊息：{1}！", path, ex.ToString());
+                return result;
+            }
 
             // check is need to maintain ratio
             if (sameRatio == true)
@@ -129,11 +199,15 @@
             // Dispose
             srcImage.Dispose();
 
-            return newImage;
+            result.Success = true;
+            result.Data = newImage;
+            result.Message = "縮圖成功";
+
+            return result;
         }
 
         /// <summary>
-        /// Thumbs the image.
+        /// 傳入<see cref="Image"/>後依據指定大小縮圖.
         /// </summary>
         /// <param name="srcImage">The source image.</param>
         /// <param name="size">The thumb size.</param>

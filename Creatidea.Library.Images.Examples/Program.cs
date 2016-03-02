@@ -24,7 +24,7 @@ namespace Creatidea.Library.Images.Examples
         /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
         {
-            ShowTextToImage();
+            //ShowTextToImage();
 
             ShowThumbImage();
         }
@@ -34,19 +34,54 @@ namespace Creatidea.Library.Images.Examples
         /// </summary>
         private static void ShowThumbImage()
         {
+            Console.WriteLine("===============================================");
+            Console.WriteLine();
+            Console.WriteLine("Thumb Image Example:");
+            Console.WriteLine();
+
             string appDirectory = Directory.GetCurrentDirectory();
             string path = Path.Combine(appDirectory, "Images", "Demo.png");
 
+            // 讀取設定檔，首先會尋找 Size，若找不到再尋找 FitSize，若找到任何一屬性則自動停止尋找
+            // Size會維持原比例，FitSize不會維持原比例
+            Console.WriteLine("Method1: Read size config from CiImage config file");
+            var result1 = CiImage.ThumbImage(path);
+            if (!result1.Success)
+            {
+                Console.WriteLine("發生錯誤：{0}", result1.Message);
+            }
+            else
+            {
+                var link = SaveImage(result1.Data, ImageFormat.Jpeg);
+                Console.WriteLine("Show result1: {0}", link);
+            }
+
+            // 直接傳入指定大小給縮圖方法
+            Console.WriteLine("Method2: Direct assign size to method");
+            var result2 = CiImage.ThumbImage(path, 300);
+            if (!result2.Success)
+            {
+                Console.WriteLine("發生錯誤：{0}", result2.Message);
+            }
+            else
+            {
+                var link = SaveImage(result2.Data, ImageFormat.Jpeg);
+                Console.WriteLine("Show result2: {0}", link);
+            }
+
+            // 直接傳入指定寬與高給方法，並可控制是否要維持比例，預設為 true
+            Console.WriteLine("Method3: Direct assign fitSize to method");
             Size size = new Size(500, 500);
-
-            var img1 = CiImage.ThumbImage(path, size);
-            var link1 = SaveImage(img1, ImageFormat.Jpeg);
-            Console.WriteLine("ShowThumbImage: " + link1);
-
-            Image srcImage = Image.FromFile(path);
-            var img2 = CiImage.ThumbImage(srcImage, size, true, ThumbQuality.Best);
-            var link2 = SaveImage(img2, ImageFormat.Png);
-            Console.WriteLine("ShowThumbImage: " + link2);
+            var result3 = CiImage.ThumbImage(path, size);
+            if (!result3.Success)
+            {
+                Console.WriteLine("發生錯誤：{0}", result3.Message);
+            }
+            else
+            {
+                var link = SaveImage(result3.Data, ImageFormat.Jpeg);
+                Console.WriteLine("Show result3: {0}", link);
+            }
         }
 
         /// <summary>
