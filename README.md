@@ -66,6 +66,43 @@ else
     Console.WriteLine("Show result2: {0}", link);
 }
 ```
-- This method use given size to thumb image and thumbnail will maintain image ratio
+- This method use given size(integer) to thumb image and thumbnail will maintain image ratio
 
 ## How to: Thumb Image By Given Specific Parameter #2
+The following example demonstrates how to thumb an image:
+```csharp
+Size size = new Size(500, 500);
+var result3 = CiImage.ThumbImage(path, size);
+
+// will not maintain image ratio
+var result31 = CiImage.ThumbImage(path, size, false);
+
+if (!result3.Success)
+{
+    Console.WriteLine("發生錯誤：{0}", result3.Message);
+}
+else
+{
+    var link = SaveImage(result3.Data, ImageFormat.Jpeg);
+    Console.WriteLine("Show result3: {0}", link);
+}
+```
+- This method use given size to thumb image
+- If set to maintain image ratio, it will auto find the largest edge and thumb image to the given size and the shorter edge will auto short according image raito
+
+## How to: Thumb Image And Set Thumb Quality
+
+**All thumb method** can assign wanted quality.
+The following example demonstrates how to thumb an image:
+```csharp
+var result4 = CiImage.ThumbImage(path, ThumbQuality.Best);
+if (!result4.Success)
+{
+    Console.WriteLine("發生錯誤：{0}", result4.Message);
+}
+else
+{
+    var link = SaveImage(result4.Data, ImageFormat.Jpeg);
+    Console.WriteLine("Show result4: {0}", link);
+}
+```
