@@ -34,19 +34,38 @@ Combine [CiConfig](https://github.com/lettucebo/Creatidea.Library.Configs) and [
 CiImage is a static calss, so no need to new an instance, just call it.
 The return type is **CiResult<Image>**, call CiResult<Image>.Data for Image object.
 
-The following example demonstrates how to create an email object and populate it:
+The following example demonstrates how to thumb an image:
 ```csharp
 var result1 = CiImage.ThumbImage(path);
 if (!result1.Success)
 {
-  Console.WriteLine("發生錯誤：{0}", result1.Message);
+    Console.WriteLine("發生錯誤：{0}", result1.Message);
 }
 else
 {
-  var link = SaveImage(result1.Data, ImageFormat.Jpeg);
-  Console.WriteLine("Show result1: {0}", link);
+    var link = SaveImage(result1.Data, ImageFormat.Jpeg);
+    Console.WriteLine("Show result1: {0}", link);
 }
 ```
 - This method use CiConfig read size config, first look for "Size", if not exist then find for "FitSize".
 - If Size is found, then it will stop to find FitSize and use Size for size setting.
 - Use Size will maintain image ratio，FitSize will not maintain image ratio.
+
+## How to: Thumb Image By Given Specific Parameter #1
+
+The following example demonstrates how to thumb an image:
+```csharp
+var result2 = CiImage.ThumbImage(path, 300);
+if (!result2.Success)
+{
+    Console.WriteLine("發生錯誤：{0}", result2.Message);
+}
+else
+{
+    var link = SaveImage(result2.Data, ImageFormat.Jpeg);
+    Console.WriteLine("Show result2: {0}", link);
+}
+```
+- This method use given size to thumb image and thumbnail will maintain image ratio
+
+## How to: Thumb Image By Given Specific Parameter #2
