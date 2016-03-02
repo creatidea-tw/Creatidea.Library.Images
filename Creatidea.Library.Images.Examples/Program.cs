@@ -82,6 +82,19 @@ namespace Creatidea.Library.Images.Examples
                 var link = SaveImage(result3.Data, ImageFormat.Jpeg);
                 Console.WriteLine("Show result3: {0}", link);
             }
+
+            // 每個縮圖方法都可以指定縮圖品質
+            Console.WriteLine("Method4: Read size config from CiImage config file");
+            var result4 = CiImage.ThumbImage(path, ThumbQuality.Best);
+            if (!result4.Success)
+            {
+                Console.WriteLine("發生錯誤：{0}", result4.Message);
+            }
+            else
+            {
+                var link = SaveImage(result4.Data, ImageFormat.Jpeg);
+                Console.WriteLine("Show result4: {0}", link);
+            }
         }
 
         /// <summary>
