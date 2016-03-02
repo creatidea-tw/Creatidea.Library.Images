@@ -26,7 +26,7 @@ using System.Drawing;
   - Text To Image
   - Thumb Image
  
-## How to: Thumb Image
+## How to: Thumb Image Basic
 
 Thumb is common use in most of scenario, here provide a simple way to accomplish this goal.
 Combine [CiConfig](https://github.com/lettucebo/Creatidea.Library.Configs) and [CiResult](https://github.com/lettucebo/Creatidea.Library.Results) for better user experience.
@@ -36,7 +36,6 @@ The return type is **CiResult<Image>**, call CiResult<Image>.Data for Image obje
 
 The following example demonstrates how to create an email object and populate it:
 ```csharp
-Console.WriteLine("Method1: Read size config from CiImage config file");
 var result1 = CiImage.ThumbImage(path);
 if (!result1.Success)
 {
