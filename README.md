@@ -26,14 +26,32 @@ using System.Drawing;
   - Text To Image
   - Thumb Image
  
-## How to: Thumb Image Basic
+## How to: Thumb Image
+
+### Getting Started
+
+CiImage is a static calss, so no need to new an instance, just call it.
+The return type is **CiResult&lt;Image&gt;**, call **CiResult&lt;Image&gt;.Data** for Image object.
 
 Thumb is common use in most of scenario, here provide a simple way to accomplish this goal.
 Combine [CiConfig](https://github.com/lettucebo/Creatidea.Library.Configs) and [CiResult](https://github.com/lettucebo/Creatidea.Library.Results) for better user experience.
 
-CiImage is a static calss, so no need to new an instance, just call it.
-The return type is **CiResult<Image>**, call CiResult<Image>.Data for Image object.
+CiImage provide various method to thumb the image, include using CiConfig to get size setting or just given size to method through parameter
 
+#### Setting CiConfig
+If you install this package by nuget, then CiConfig is all set. Just need to modify the **Size** or **FitSize** property to what you want.
+`CiImage.json`
+```json
+{
+    "CiImage": {
+        "Version": "1.0.1",
+        "Size": 1000,
+        "FitSize" : "500,500"
+    }
+}
+```
+
+#### Thumb Image using CiConfig Value
 The following example demonstrates how to thumb an image:
 ```csharp
 var result1 = CiImage.ThumbImage(path);
