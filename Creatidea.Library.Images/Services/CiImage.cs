@@ -3,7 +3,6 @@
     using System;
     using System.Drawing;
     using System.Drawing.Drawing2D;
-    using System.Drawing.Imaging;
     using System.Linq;
 
     using Creatidea.Library.Configs;
@@ -22,10 +21,18 @@
         /// <param name="font">文字字型.</param>
         /// <param name="textColor">文字顏色.</param>
         /// <param name="backColor">背景顏色.</param>
-        /// <param name="width">The default width.</param>
-        /// <returns>System.String.</returns>
-        public static Image TextToImage(string text, Font font, Color textColor, Color backColor, int width = 0)
+        /// <param name="width">設定圖片之寬度.</param>
+        /// <returns>CiResult包含文字轉換為圖片之圖片物件</returns>
+        public static CiResult<Image> TextImage(string text, Font font, Color textColor, Color backColor, int width = 0)
         {
+            var result = new CiResult<Image>() { Message = "文字轉換圖片發生錯誤！" };
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                result.Message += "text參數為空！";
+                return result;
+            }
+
             // first, create a dummy bitmap just to get a graphics object
             Image img = new Bitmap(1, 1);
             Graphics drawing = Graphics.FromImage(img);
@@ -64,7 +71,11 @@
             textBrush.Dispose();
             drawing.Dispose();
 
-            return img;
+            result.Success = true;
+            result.Message = "文字轉換圖片成功";
+            result.Data = img;
+
+            return result;
         }
 
         /// <summary>
@@ -73,7 +84,7 @@
         /// <param name="path">The image path.</param>
         /// <param name="mode">縮圖品質.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> ThumbImage(string path, ThumbQuality mode = ThumbQuality.Normal)
+        public static CiResult<Image> Thumb(string path, ThumbQuality mode = ThumbQuality.Normal)
         {
             var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
 
@@ -82,7 +93,7 @@
                 int size;
                 if (int.TryParse(CiConfig.Global.CiImage.Size.ToString(), out size))
                 {
-                    return ThumbImage(path, size, mode);
+                    return Thumb(path, size, mode);
                 }
             }
 
@@ -104,7 +115,7 @@
                 }
 
                 Size fitSize = new Size() { Width = sizeX, Height = sizeY };
-                return ThumbImage(path, fitSize, false, mode);
+                return Thumb(path, fitSize, false, mode);
             }
 
             result.Message += "無法讀取縮圖尺寸設定檔！";
@@ -118,9 +129,9 @@
         /// <param name="size">最大邊長度.</param>
         /// <param name="mode">縮圖品質.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> ThumbImage(string path, int size, ThumbQuality mode = ThumbQuality.Normal)
+        public static CiResult<Image> Thumb(string path, int size, ThumbQuality mode = ThumbQuality.Normal)
         {
-            return ThumbImage(path, new Size(size, size), true, mode);
+            return Thumb(path, new Size(size, size), true, mode);
         }
 
         /// <summary>
@@ -131,7 +142,7 @@
         /// <param name="sameRatio">if set to <c>true</c> 維持長寬比.</param>
         /// <param name="mode">縮圖品質.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> ThumbImage(string path, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
+        public static CiResult<Image> Thumb(string path, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
         {
             var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
 
@@ -147,7 +158,7 @@
                 return result;
             }
 
-            return ThumbImage(srcImage, size, sameRatio, mode);
+            return Thumb(srcImage, size, sameRatio, mode);
         }
 
         /// <summary>
@@ -158,7 +169,7 @@
         /// <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
         /// <param name="mode">The image quality.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> ThumbImage(Image srcImage, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
+        public static CiResult<Image> Thumb(Image srcImage, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
         {
             var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
 
