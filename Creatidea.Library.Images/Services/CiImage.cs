@@ -147,6 +147,21 @@
                 return result;
             }
 
+            return ThumbImage(srcImage, size, sameRatio, mode);
+        }
+
+        /// <summary>
+        /// 傳入<see cref="Image"/>後依據指定大小縮圖.
+        /// </summary>
+        /// <param name="srcImage">The source image.</param>
+        /// <param name="size">The thumb size.</param>
+        /// <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
+        /// <param name="mode">The image quality.</param>
+        /// <returns>Image.</returns>
+        public static CiResult<Image> ThumbImage(Image srcImage, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
+        {
+            var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
+
             // check is need to maintain ratio
             if (sameRatio == true)
             {
@@ -204,71 +219,6 @@
             result.Message = "縮圖成功";
 
             return result;
-        }
-
-        /// <summary>
-        /// 傳入<see cref="Image"/>後依據指定大小縮圖.
-        /// </summary>
-        /// <param name="srcImage">The source image.</param>
-        /// <param name="size">The thumb size.</param>
-        /// <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
-        /// <param name="mode">The image quality.</param>
-        /// <returns>Image.</returns>
-        public static Image ThumbImage(Image srcImage, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
-        {
-            // check is need to maintain ratio
-            if (sameRatio == true)
-            {
-                // Figure out the ratio
-                double ratioX = (double)size.Width / (double)srcImage.Width;
-                double ratioY = (double)size.Height / (double)srcImage.Height;
-
-                // use whichever multiplier is smaller
-                double ratio = ratioX < ratioY ? ratioX : ratioY;
-
-                // now we can get the new height and width
-                size.Width = Convert.ToInt32(srcImage.Width * ratio);
-                size.Height = Convert.ToInt32(srcImage.Height * ratio);
-            }
-
-            int newWidth = size.Width;
-            int newHeight = size.Height;
-
-            Bitmap newImage = new Bitmap(newWidth, newHeight);
-            using (Graphics gr = Graphics.FromImage(newImage))
-            {
-                // set thumb quality
-                switch (mode)
-                {
-                    case ThumbQuality.Best:
-                        gr.SmoothingMode = SmoothingMode.HighQuality;
-                        gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                        break;
-                    case ThumbQuality.High:
-                        gr.SmoothingMode = SmoothingMode.HighQuality;
-                        gr.InterpolationMode = InterpolationMode.HighQualityBilinear;
-                        gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                        break;
-                    case ThumbQuality.Low:
-                        gr.SmoothingMode = SmoothingMode.HighSpeed;
-                        gr.InterpolationMode = InterpolationMode.Low;
-                        gr.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-                        break;
-                    default:
-                        gr.SmoothingMode = SmoothingMode.Default;
-                        gr.InterpolationMode = InterpolationMode.Default;
-                        gr.PixelOffsetMode = PixelOffsetMode.Default;
-                        break;
-                }
-
-                gr.DrawImage(srcImage, new Rectangle(0, 0, newWidth, newHeight));
-            }
-
-            // Dispose
-            srcImage.Dispose();
-
-            return newImage;
         }
     }
 }

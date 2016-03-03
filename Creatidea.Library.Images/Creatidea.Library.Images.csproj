@@ -58,8 +58,6 @@
     <Compile Include="Services\CiImage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Data\CiConfig\CiImage.json" />
-    <None Include="App_Data\CiConfig\CiConfig.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
