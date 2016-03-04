@@ -7,7 +7,6 @@
 
     using Creatidea.Library.Configs;
     using Creatidea.Library.Images.Enums;
-    using Creatidea.Library.Results;
 
     /// <summary>
     /// CiImage 公開類別.
@@ -23,14 +22,11 @@
         /// <param name="backColor">背景顏色.</param>
         /// <param name="width">設定圖片之寬度.</param>
         /// <returns>CiResult包含文字轉換為圖片之圖片物件</returns>
-        public static CiResult<Image> TextImage(string text, Font font, Color textColor, Color backColor, int width = 0)
+        public static Image TextImage(string text, Font font, Color textColor, Color backColor, int width = 0)
         {
-            var result = new CiResult<Image>() { Message = "文字轉換圖片發生錯誤！" };
-
             if (string.IsNullOrWhiteSpace(text))
             {
-                result.Message += "text參數為空！";
-                return result;
+                throw new ArgumentNullException(nameof(text), "text參數為空！");
             }
 
             // first, create a dummy bitmap just to get a graphics object
@@ -71,11 +67,7 @@
             textBrush.Dispose();
             drawing.Dispose();
 
-            result.Success = true;
-            result.Message = "文字轉換圖片成功";
-            result.Data = img;
-
-            return result;
+            return img;
         }
 
         /// <summary>
@@ -84,10 +76,8 @@
         /// <param name="path">The image path.</param>
         /// <param name="mode">縮圖品質.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> Thumb(string path, ThumbQuality mode = ThumbQuality.Normal)
+        public static Image Thumb(string path, ThumbQuality mode = ThumbQuality.Normal)
         {
-            var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
-
             if (CiConfig.Global.CiImage.Size != null && CiConfig.Global.CiImage.Size.ToString() != "0")
             {
                 int size;
@@ -103,23 +93,21 @@
                 string[] tmpSizeArray = tmpSizeString.Split(',');
                 if (tmpSizeArray.Count() != 2)
                 {
-                    result.Message += "無法讀取縮圖尺寸設定檔！FitSize格式錯誤！";
-                    return result;
+                    throw new ArgumentException("無法讀取縮圖尺寸設定檔！FitSize格式錯誤！");
                 }
 
                 int sizeX, sizeY;
-                if (!int.TryParse(tmpSizeArray[0], out sizeX) || !int.TryParse(tmpSizeArray[0], out sizeY))
+                if (int.TryParse(tmpSizeArray[0], out sizeX) && int.TryParse(tmpSizeArray[0], out sizeY))
                 {
-                    result.Message += "無法讀取縮圖尺寸設定檔！FitSize格式錯誤！";
-                    return result;
+                    Size fitSize = new Size() { Width = sizeX, Height = sizeY };
+                    return Thumb(path, fitSize, false, mode);
                 }
 
-                Size fitSize = new Size() { Width = sizeX, Height = sizeY };
-                return Thumb(path, fitSize, false, mode);
+                throw new ArgumentException("無法讀取縮圖尺寸設定檔！FitSize格式錯誤！");
             }
 
-            result.Message += "無法讀取縮圖尺寸設定檔！";
-            return result;
+            throw new ArgumentNullException("CiImage", "無法讀取縮圖尺寸設定檔！FitSize格式錯誤！");
+
         }
 
         /// <summary>
@@ -129,7 +117,7 @@
         /// <param name="size">最大邊長度.</param>
         /// <param name="mode">縮圖品質.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> Thumb(string path, int size, ThumbQuality mode = ThumbQuality.Normal)
+        public static Image Thumb(string path, int size, ThumbQuality mode = ThumbQuality.Normal)
         {
             return Thumb(path, new Size(size, size), true, mode);
         }
@@ -142,10 +130,8 @@
         /// <param name="sameRatio">if set to <c>true</c> 維持長寬比.</param>
         /// <param name="mode">縮圖品質.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> Thumb(string path, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
+        public static Image Thumb(string path, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
         {
-            var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
-
             // 讀取檔案
             Image srcImage;
             try
@@ -154,8 +140,7 @@
             }
             catch (Exception ex)
             {
-                result.Message += string.Format("無法讀取圖片檔案！路徑：{0}，錯誤訊息：{1}！", path, ex.ToString());
-                return result;
+                throw new ArgumentNullException(nameof(path), string.Format("無法讀取圖片檔案！路徑：{0}，錯誤訊息：{1}！", path, ex.ToString()));
             }
 
             return Thumb(srcImage, size, sameRatio, mode);
@@ -169,10 +154,8 @@
         /// <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
         /// <param name="mode">The image quality.</param>
         /// <returns>Image.</returns>
-        public static CiResult<Image> Thumb(Image srcImage, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
+        public static Image Thumb(Image srcImage, Size size, bool sameRatio = true, ThumbQuality mode = ThumbQuality.Normal)
         {
-            var result = new CiResult<Image>() { Message = "縮圖發生錯誤！" };
-
             // check is need to maintain ratio
             if (sameRatio == true)
             {
@@ -225,11 +208,7 @@
             // Dispose
             srcImage.Dispose();
 
-            result.Success = true;
-            result.Data = newImage;
-            result.Message = "縮圖成功";
-
-            return result;
+            return newImage;
         }
     }
 }

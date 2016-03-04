@@ -42,55 +42,27 @@
             // Size會維持原比例，FitSize不會維持原比例
             Console.WriteLine("Method1: Read size config from CiImage config file");
             var result1 = CiImage.Thumb(path);
-            if (!result1.Success)
-            {
-                Console.WriteLine("發生錯誤：{0}", result1.Message);
-            }
-            else
-            {
-                var link = SaveImage(result1.Data, ImageFormat.Jpeg);
-                Console.WriteLine("Show result1: {0}", link);
-            }
+            var link1 = SaveImage(result1, ImageFormat.Jpeg);
+            Console.WriteLine("Show result1: {0}", link1);
 
             // 直接傳入指定大小給縮圖方法
             Console.WriteLine("Method2: Direct assign size to method");
             var result2 = CiImage.Thumb(path, 300);
-            if (!result2.Success)
-            {
-                Console.WriteLine("發生錯誤：{0}", result2.Message);
-            }
-            else
-            {
-                var link = SaveImage(result2.Data, ImageFormat.Jpeg);
-                Console.WriteLine("Show result2: {0}", link);
-            }
+            var link2 = SaveImage(result2, ImageFormat.Jpeg);
+            Console.WriteLine("Show result2: {0}", link2);
 
             // 直接傳入指定寬與高給方法，並可控制是否要維持比例，預設為 true
             Console.WriteLine("Method3: Direct assign fitSize to method");
             Size size = new Size(500, 500);
             var result3 = CiImage.Thumb(path, size);
-            if (!result3.Success)
-            {
-                Console.WriteLine("發生錯誤：{0}", result3.Message);
-            }
-            else
-            {
-                var link = SaveImage(result3.Data, ImageFormat.Jpeg);
-                Console.WriteLine("Show result3: {0}", link);
-            }
+            var link3 = SaveImage(result3, ImageFormat.Jpeg);
+            Console.WriteLine("Show result3: {0}", link3);
 
             // 每個縮圖方法都可以指定縮圖品質
             Console.WriteLine("Method4: Read size config from CiImage config file");
             var result4 = CiImage.Thumb(path, ThumbQuality.Best);
-            if (!result4.Success)
-            {
-                Console.WriteLine("發生錯誤：{0}", result4.Message);
-            }
-            else
-            {
-                var link = SaveImage(result4.Data, ImageFormat.Jpeg);
-                Console.WriteLine("Show result4: {0}", link);
-            }
+            var link = SaveImage(result4, ImageFormat.Jpeg);
+            Console.WriteLine("Show result4: {0}", link);
         }
 
         /// <summary>
@@ -105,15 +77,8 @@
             Color backColor = Color.DarkBlue;
 
             var result4 = CiImage.TextImage(txt, font, txtColor, backColor, 500);
-            if (!result4.Success)
-            {
-                Console.WriteLine("發生錯誤：{0}", result4.Message);
-            }
-            else
-            {
-                var link = SaveImage(result4.Data, ImageFormat.Jpeg);
-                Console.WriteLine("ShowTextImage: {0}", link);
-            }
+            var link = SaveImage(result4, ImageFormat.Jpeg);
+            Console.WriteLine("ShowTextImage: {0}", link);
         }
 
         /// <summary>
