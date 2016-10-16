@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ci.Image</name>
+    </assembly>
+    <members>
+        <member name="T:Creatidea.Library.Images.Enums.ThumbQuality">
+            <summary>
+            Enum Thumb Quality
+            </summary>
+        </member>
+        <member name="F:Creatidea.Library.Images.Enums.ThumbQuality.Best">
+            <summary>
+            The best quality
+            </summary>
+        </member>
+        <member name="F:Creatidea.Library.Images.Enums.ThumbQuality.High">
+            <summary>
+            The high quality
+            </summary>
+        </member>
+        <member name="F:Creatidea.Library.Images.Enums.ThumbQuality.Normal">
+            <summary>
+            The normal quality
+            </summary>
+        </member>
+        <member name="F:Creatidea.Library.Images.Enums.ThumbQuality.Low">
+            <summary>
+            The low quality
+            </summary>
+        </member>
+        <member name="T:Creatidea.Library.Images.Services.CiImage">
+            <summary>
+            CiImage 公開類別.
+            </summary>
+        </member>
+        <member name="M:Creatidea.Library.Images.Services.CiImage.TextImage(System.String,System.Drawing.Font,System.Drawing.Color,System.Drawing.Color,System.Int32)">
+            <summary>
+            文字轉換為圖片.
+            </summary>
+            <param name="text">欲轉換之文字.</param>
+            <param name="font">文字字型.</param>
+            <param name="textColor">文字顏色.</param>
+            <param name="backColor">背景顏色.</param>
+            <param name="width">設定圖片之寬度.</param>
+            <returns>CiResult包含文字轉換為圖片之圖片物件</returns>
+        </member>
+        <member name="M:Creatidea.Library.Images.Services.CiImage.Thumb(System.String,Creatidea.Library.Images.Enums.ThumbQuality)">
+            <summary>
+            從CiConfig讀取CiImage.Size或CiImage.FitSize設定作為依據並縮圖
+            </summary>
+            <param name="path">The image path.</param>
+            <param name="mode">縮圖品質.</param>
+            <returns>Image.</returns>
+        </member>
+        <member name="M:Creatidea.Library.Images.Services.CiImage.Thumb(System.String,System.Int32,Creatidea.Library.Images.Enums.ThumbQuality)">
+            <summary>
+            傳入最大邊長度作為依據並縮圖且一定會維持比例
+            </summary>
+            <param name="path">The image path.</param>
+            <param name="size">最大邊長度.</param>
+            <param name="mode">縮圖品質.</param>
+            <returns>Image.</returns>
+        </member>
+        <member name="M:Creatidea.Library.Images.Services.CiImage.Thumb(System.String,System.Drawing.Size,System.Boolean,Creatidea.Library.Images.Enums.ThumbQuality)">
+            <summary>
+            傳入指定大小作為依據並縮圖
+            </summary>
+            <param name="path">完整圖片檔路徑.</param>
+            <param name="size">The thumb size.</param>
+            <param name="sameRatio">if set to <c>true</c> 維持長寬比.</param>
+            <param name="mode">縮圖品質.</param>
+            <returns>Image.</returns>
+        </member>
+        <member name="M:Creatidea.Library.Images.Services.CiImage.Thumb(System.Drawing.Image,System.Drawing.Size,System.Boolean,Creatidea.Library.Images.Enums.ThumbQuality)">
+            <summary>
+            傳入<see cref="T:System.Drawing.Image"/>後依據指定大小縮圖.
+            </summary>
+            <param name="srcImage">The source image.</param>
+            <param name="size">The thumb size.</param>
+            <param name="sameRatio">if set to <c>true</c> maintain same ratio.</param>
+            <param name="mode">The image quality.</param>
+            <returns>Image.</returns>
+        </member>
+    </members>
+</doc>

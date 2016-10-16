@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Creatidea.Library.Images", "Creatidea.Library.Images\Creatidea.Library.Images.csproj", "{15DEDA93-D727-4386-91F9-7F3CD3EDF9A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ci.Image", "Ci.Image\Ci.Image.csproj", "{15DEDA93-D727-4386-91F9-7F3CD3EDF9A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Creatidea.Library.Images.Examples", "Creatidea.Library.Images.Examples\Creatidea.Library.Images.Examples.csproj", "{D1781373-1D6B-44C1-BA48-7FAD2831F624}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ci.Image.Example", "Ci.Image.Example\Ci.Image.Example.csproj", "{D1781373-1D6B-44C1-BA48-7FAD2831F624}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{DB1236FE-B48A-43DE-9D6D-B463FB5F9BBB}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Creatidea.Library.Images.NuGet", "Creatidea.Library.Images.NuGet\Creatidea.Library.Images.NuGet.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ci.Image.NuGet", "Ci.Image.NuGet\Ci.Image.NuGet.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
